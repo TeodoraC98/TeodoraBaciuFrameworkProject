@@ -1,0 +1,57 @@
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from trails.models import Trail
+from users.models import User
+from django.contrib.auth.models import Group
+from .forms import UserRegisterForm, UserLoginForm,UserProfileForm
+from django.contrib.auth import authenticate, login
+from django.http import HttpResponseRedirect
+def register(request):
+    if request.method == 'POST':
+     user_form = UserRegisterForm(request.POST)
+     profile_form = UserProfileForm(request.POST)
+     if user_form.is_valid() and profile_form.is_valid() :
+        profile = profile_form.save(commit=False)
+        user = user_form.save(commit=False)
+        name = user_form.cleaned_data.get('first_name')
+        user.profile = profile
+        user_group = Group.objects.get(name='Member')
+        user.save()
+        user.groups.add(user_group)
+        messages.success(request, f'Account created for {name}!')
+        return redirect('login')
+    else:
+       user_form = UserRegisterForm()
+       profile_form = UserProfileForm()
+    return render(request, 'users/register.html', {'user_form': user_form, 'user_profile_form':profile_form})
+
+
+# def login_user(request):
+#    if request.method == "POST":
+#       form = UserLoginForm(request.POST)
+#       print(form.is_valid())
+#       username = request.POST["username"]
+#       password = request.POST["password"]
+#       user = authenticate(request, username=username, password=password)
+#       if user is not None:
+#          login(request, user)
+#          return redirect("profile")
+     
+#    else:
+#      form = UserLoginForm()
+#    return render(request, 'users/login.html', {'form': form})
+    
+
+
+@login_required
+def profile_user(request,username):
+   user=User.objects.get(username=username)
+   context=Trail.objects.filter(coordinator_id=user.id).values()
+   return render(request, 'users/profile.html',{'trails':context,'user':user})
+
+@login_required 
+def profile(request):
+   context=Trail.objects.filter(coordinator_id=request.user.id).values()
+   return render(request, 'users/profile.html',{'trails':context})
+

@@ -1,0 +1,26 @@
+
+nav{
+   background-color: rgb(63, 65, 65);
+}
+.img-profile{
+    max-height: 10rem;
+    width:auto;
+    max-width: 10rem;
+ 
+}
+.carousel-inner  *
+{
+    background-color: rgb(214, 214, 214);
+    color: rgb(30, 18, 206);
+}
+.carousel-inner{
+    background-color: black;
+}
+.card{
+
+    width: 80%;
+    
+}
+.card-text, .card-title{
+    text-align: center;
+}

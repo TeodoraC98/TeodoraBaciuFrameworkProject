@@ -1,0 +1,81 @@
+{% extends "app/base.html" %}
+{% load static %}
+{% block content %}
+<h1>TRAIL</h1>
+<div class="container-fluid">
+  <article class="media content-section">
+      <div class="media-body">
+        <div class="article-metadata">
+          <a class="mr-2" href="{% url 'profile_user'  object.coordinator  %}">Post by: {{ object.coordinator}}</a>
+        </div>
+       <div class="container">
+        <div class="row tb_trails">
+          <div class="col-sm-8"> {{ object.description }}</div>
+        </div>
+       <div class="row">
+         <div class="col-sm"> Duration: {{ object.duration }}</div>
+         <div class="col-sm">Difficulty: {{ object.difficulty_level }}</div>
+         <div class="col-sm">Type: {{ object.type }}</div>
+       </div>
+       <div class="row">
+         <div class="col-sm"> date: {{ object.date }}</div>
+         <div class="col-sm"> Meeting location:{{ object.meeting_point }}</div>
+       </div>
+</div>
+      </div>
+        {% if perms.trails.change_trail%}
+         <div>
+          <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'trail-update' object.id %}">Update</a> 
+          </div>
+           {% if object.coordinator == user %}
+             <div>
+               <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'trail-delete' object.id %}">Delete</a> 
+             </div>
+            {%endif%}
+        {%endif%}
+    </article>
+    <div>
+      <form action="{% url 'join' %}" method="post">
+                  {% csrf_token %}
+                   <input
+          type="hidden" value="{{ object.id }}"   name="join_trail"
+        />
+         <input
+          type="submit" value="Join in" class="btn btn-sm btn-default pull-right"
+        />
+        </form>
+    </div>
+    <div class="container-fluid">
+      <h4>Participants:</h4>
+    </div>
+  </div>
+ <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+
+  <div class="carousel-inner">
+        {%for participant in object.get_participants %}
+            <div class="carousel-item">
+           <div class="card m-auto">
+        <img src="{{ participant.user.profile.image.url }}"class=" m-auto card-img-top img-thumbnail img-profile" id="img-pr" alt="Participant profile image">
+           <div class="card-body">
+           <h5 class="card-title">{{participant.user.first_name }} {{participant.user.last_name}} -  {{participant.user.username}}</h5>
+           <p class="card-text"><small class="text-muted">Experience: {{participant.user.profile.experience }}</small></p>
+           <p class="card-text"><small class="text-muted">Joning date: {{participant.joining_date}}
+
+           </small></p>
+           </div>
+          </div>
+       </div>
+          {%endfor%}
+   
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+<script src="{% static 'app/javascript/carousel_update.js'%}"></script>
+{% endblock content %}

@@ -1,0 +1,43 @@
+{% extends "app/base.html" %}
+{% block content %}
+   <div class="content-section">
+    {% if next %}
+    {% if user.is_authenticated %}
+      <p>This page is restricted. Please login with an account that has access.</p>
+    {% else %}
+      <p>Please login!  .</p>
+    {% endif %}
+    {% endif %}
+    <form method="POST">  
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">WELCOME BACK</legend>
+           {% for field in form %}
+            <div class="form-group row">
+               <label class="col-sm-2 col-form-label">{{field.label}}</label>
+                <div class="col-sm-10">
+                <div>
+                 {{field}}
+                </div>
+                <div>  {{field.errors}}</div>
+             </div>
+             </div>
+            {% endfor%}
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline" type="submit">Sign In</button>
+        </div>
+    </form>
+    <div class="border-top pt-3">
+        <small class="text-muted">
+           Forgot password? <a class="ml-2" href="{% url 'password_reset' %}">Get password</a>
+        </small>
+    </div>
+    <div class="border-top pt-3">
+        <small class="text-muted">
+           Do you have an account? <a class="ml-2" href="{% url 'register' %}">Sign Up</a>
+        </small>
+    </div>
+   </div>
+{% endblock content %}
+    
