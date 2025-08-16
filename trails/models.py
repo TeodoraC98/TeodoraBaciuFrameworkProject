@@ -22,7 +22,7 @@ class Trail(models.Model):
     duration=models.CharField(max_length=20)
     distance=models.CharField(max_length=15)
     meeting_point=models.CharField(max_length=50)
-    date=models.DateTimeField()
+    date=models.DateTimeField(default=timezone.now)
     date_posted=models.DateTimeField(default=timezone.now)
     description = models.TextField()
     coordinator = models.ForeignKey(User, on_delete=models.CASCADE)
