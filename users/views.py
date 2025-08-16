@@ -12,10 +12,10 @@ def register(request):
      user_form = UserRegisterForm(request.POST)
      profile_form = UserProfileForm(request.POST)
      if user_form.is_valid() and profile_form.is_valid() :
-      #   profile = profile_form.save(commit=False)
+        profile = profile_form.save(commit=False)
         user = user_form.save(commit=False)
         name = user_form.cleaned_data.get('first_name')
-      #   user.profile = profile
+        user.profile = profile
         user_group = Group.objects.get(name='Member')
         user.save()
         user.groups.add(user_group)
