@@ -2,7 +2,6 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from .models import Trail,Participant,Comment
-from .forms import CreateCommentForm
 from django.contrib.auth.models import User
 from django.views.generic import (
     ListView, 
