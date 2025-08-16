@@ -18,7 +18,6 @@ class TrailListView(ListView):
   model = Trail
   template_name = 'app/index.html' 
   context_object_name = 'trails' 
-  # ordering = ['-date_posted'] 
 
 
 class TrailDetailView(LoginRequiredMixin,PermissionRequiredMixin,DetailView):
