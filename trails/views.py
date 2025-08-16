@@ -28,7 +28,7 @@ class TrailDetailView(LoginRequiredMixin,PermissionRequiredMixin,DetailView):
 
 
 class TrailCreateView(PermissionRequiredMixin,LoginRequiredMixin, CreateView):
-    permission_required = ('trails.add_trail')
+    permission_required = ('trail.add_trail')
     model = Trail
     fields=['title','difficulty_level','type','duration'
             ,'distance','meeting_point','date','description']
