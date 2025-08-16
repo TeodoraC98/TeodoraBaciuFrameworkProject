@@ -1,6 +1,5 @@
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import Group, Permission
-from trails.models import Trail
 class Command(BaseCommand):
     help = 'Create user roles and assign permissions'
     def handle(self, *args, **kwargs):
