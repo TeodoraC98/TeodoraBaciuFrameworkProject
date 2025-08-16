@@ -34,7 +34,12 @@ class   UserRegisterForm(UserCreationForm):
             'first_name':'Name',
             'last_name':'Surname',
         }
-
+class   UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username','email','first_name','last_name']
+        
+        
 experience_choice=[
     ("Beggine","Begginer"),
     ("Advanced","Advanced"),
@@ -56,10 +61,10 @@ class UserProfileForm(forms.ModelForm):
             'birth_date':forms.DateInput(format='%Y/%m/%d',attrs={'placeholder': 'YYYY-MM-DD','class':'form-control'}),
         }
         labels={
-            'birth_date':"Date of birth:"
+            'birth_date':"Date of birth:(YYYY-MM-DD)"
         }
 
-       
+
 class   UserLoginForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','placeholder': 'Username'}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control','placeholder':'Password'}))

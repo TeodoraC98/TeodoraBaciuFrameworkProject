@@ -1,57 +1,81 @@
 {% extends "app/base.html" %}
 {% load static %}
 {% block content %}
-<h1>TRAIL</h1>
-<div class="container-fluid">
-  <article class="media content-section">
+<div class="container-fluid pb-3 flex-grow-3 d-flex flex-column">
+    <div class="row flex-grow-sm-1 flex-grow-0">
+        <aside class="col-sm-3 flex-grow-sm-1 flex-shrink-1 flex-grow-0 sticky-top pb-sm-0 pb-3">
+            <div class="bg-light border rounded-3 p-1 h-100 sticky-top">
+             
+                <ul class="nav nav-pills flex-sm-column flex-row mb-auto justify-content-between text-truncate">
+                     <li class=" m-auto pt-5">
+                      <h4 class=" px-3 text-truncate">
+                            Trails
+                      </h4>
+              
+                    </li>
+                  {%for trail in object.get_trails%}
+                    <li>
+                        <a href="{% url 'trail-detail' trail.id %}" class="nav-link px-2 text-truncate">
+                            <i class="bi bi-speedometer fs-5"></i>
+                            <span class="d-none d-sm-inline">{{trail.title}}</span>
+                        </a>
+                      <hr/>
+                    </li>
+                    {%endfor%}
+                </ul>
+            </div>
+        </aside>
+        <main class="col  h-100 main_det-tr">
+            <div class="bg-light border rounded-3 p-3">
+            <h3 >Details of trail {{object.title}}</h3>
+                <div class="container-fluid">
+   <article class="media content-section">
       <div class="media-body">
         <div class="article-metadata">
           <a class="mr-2" href="{% url 'profile_user'  object.coordinator  %}">Post by: {{ object.coordinator}}</a>
         </div>
-       <div class="container">
-        <div class="row tb_trails">
-          <div class="col-sm-8"> {{ object.description }}</div>
-        </div>
-       <div class="row">
-         <div class="col-sm"> Duration: {{ object.duration }}</div>
-         <div class="col-sm">Difficulty: {{ object.difficulty_level }}</div>
-         <div class="col-sm">Type: {{ object.type }}</div>
+       <div>
+        <p >
+           {{ object.description }}</p>
+        
+      <div class="d-flex flex-column bd-highlight mb-3">
+         <div class="p-2 bd-highlight"> Duration: {{ object.duration }}</div>
+         <div class="p-2 bd-highlight" id="trail-difficulty">Difficulty: {{ object.difficulty_level }}</div>
+         <div class="p-2 bd-highlight">Type: {{ object.type }}</div>
+         <div class="p-2 bd-highlight"> Date: {{ object.date|date:'dS, F, Y' }}</div>
+         <div class="p-2 bd-highlight"> Meeting location:{{ object.meeting_point }}</div>
        </div>
-       <div class="row">
-         <div class="col-sm"> date: {{ object.date }}</div>
-         <div class="col-sm"> Meeting location:{{ object.meeting_point }}</div>
-       </div>
-</div>
+     </div>
       </div>
-        {% if perms.trails.change_trail%}
+       <div class="btn-group mb-2">
+         {% if perms.trails.change_trail%}
          <div>
-          <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'trail-update' object.id %}">Update</a> 
+          <a class="btn btn-sm btn-outline-secondary" href="{% url 'trail-update' object.id %}">Update</a> 
           </div>
            {% if object.coordinator == user %}
              <div>
-               <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'trail-delete' object.id %}">Delete</a> 
+               <a class="btn btn-sm btn-outline-secondary" href="{% url 'trail-delete' object.id %}">Delete</a> 
+             </div>
+             <div>
+                 <form id="frm_join" action="{% url 'join' %}" method="post">
+                  {% csrf_token %}
+                   <input  type="hidden" value="{{ object.id }}"   name="join_trail"/>
+                   <input  type="submit" value="Join in" id="ip_join" class="btn btn-sm btn-outline-secondary"/>
+                  </form>
              </div>
             {%endif%}
         {%endif%}
+      </div>
     </article>
-    <div>
-      <form action="{% url 'join' %}" method="post">
-                  {% csrf_token %}
-                   <input
-          type="hidden" value="{{ object.id }}"   name="join_trail"
-        />
-         <input
-          type="submit" value="Join in" class="btn btn-sm btn-default pull-right"
-        />
-        </form>
-    </div>
+   </div>
     <div class="container-fluid">
-      <h4>Participants:</h4>
-    </div>
-  </div>
+      <h4>Participants: {{ object.get_participants|length }}</h4>
+  
+
  <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
 
   <div class="carousel-inner">
+  
         {%for participant in object.get_participants %}
             <div class="carousel-item">
            <div class="card m-auto">
@@ -67,15 +91,56 @@
        </div>
           {%endfor%}
    
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
+           </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+               <span class="visually-hidden">Previous</span>
+              </button>
+           <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+             <span class="carousel-control-next-icon" aria-hidden="true"></span>
+           <span class="visually-hidden">Next</span>
+          </button>
+       </div>
+    
+       </div>
+       
+              </div>
+              <div>
+                <div class="mb-4">
+            <div class="d-flex gap-3 m-3">
+                <img src="{{ user.profile.image.url }} " alt="Image user placeing the comment" class="user_pic">
+                <div class="flex-grow-1">
+                   
+               <div class="content-section">
+           <form   action="{% url 'add_comment' %}" method="post">
+                  {% csrf_token %}
+              <input type="hidden" value="{{ object.id }}"  name="add_comment_trail-id"/>
+              <input type="hidden" value="{{ object.user_id }}"  name="add_comment_trail-user"/>
+              <input class="form-control mt-2 mb-2" type="text"   name="add_comment_trail-text"/>
+              <input  type="submit" value="Add comment"  class="btn btn-sm btn-default pull-right"/>
+            </form>
+            </div>
+            </div>
+        </div>
+
+                {% for comment in object.get_comments%}
+                  <div class="comment-box">
+                    <div class="d-flex gap-3">
+                    <img  src="{{ comment.user.profile.image.url }}" alt="Image user placed the comment" class="user_pic">
+                    <div class="flex-grow-1">
+                        <div class="d-flex justify-content-between align-items-center mt-3 small">
+                            <div class="mb-0">{{comment.user.first_name}} {{comment.user.last_name}} - {{comment.user.username}} </div>
+                            <span class="comment-time small">{{comment.create_on}}</span>
+                        </div>
+                        <p class="mb-1 small">{{comment.comment}}</p>
+                    </div>
+                  </div>
+               </div>
+                {%endfor%}
+              </div>
+        </main>
+    </div>
 </div>
+<script src="{% static 'app/javascript/alarm_user_skill.js'%}"></script>
 <script src="{% static 'app/javascript/carousel_update.js'%}"></script>
 {% endblock content %}

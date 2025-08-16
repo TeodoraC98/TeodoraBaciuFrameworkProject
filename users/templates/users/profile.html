@@ -3,7 +3,7 @@
 {% block content %}
 <div class="content-section">
     <div class="media">
-        <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
+        <img class="rounded-circle profile_img account-img" src="{{ user.profile.image.url }}">
         <div class="media-body">
             <h2 class="account-heading">{{ user.username }}</h2>
             <p class="text-secondary">{{ user.email }}</p>
@@ -11,20 +11,49 @@
             <p class="text-secondary">{{user.profile.bith_date}}</p>
         </div>
     </div>
-     {% if perms.trails.add_trail%}
+    
+    <form method="POST">
+       <div>
+      <a href="{% url 'update_profile'%}">Update profile</a>
+     </div>
+    </form>
     <div>
-        <h3>Trails created:</h3>
-   
-     {% for trail in trails %}
-    <article class="media content-section">
-      <div class="media-body">
-        <div class="article-metadata">
+       {% if perms.trails.add_trail %}
+    <div class="album py-5 bg-light ms-auto">
+        <div class="container ">
+          <div class="row justify-content-evenly">
+                {% for trail in trails%}
+              <div class="col-md-4">
+      
+              <div class="card mb-4 shadow-sm">
+                <img src="/media/default_card.jpg" class="card-img-top" alt="Cover trail item in card section">
+                  <text class="card-text">
+                   Rout: {{trail.title}}
+                  </text>
+                <div class="card-body">
+                  <p class="card-text mt-0">
+                    Posted by:  {{trail.coordinator}}
+                  </p>
+                  <div
+                    class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <a href="{% url 'trail-detail' trail.id %}"
+                        type="button"
+                        class="btn btn-sm btn-outline-secondary">
+                        View
+                      </a>
+
+                    </div>
+                    <small class="text-muted">{{trail.date}}</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {%endfor%}
+          </div>
         </div>
-        <p class="article-content">{{ trail.description }}</p>
       </div>
-     </article>
-      {% endfor %}
+     {% endif %}
     </div>
-</div>
- {% endif%}
+    </div>
 {% endblock content %}

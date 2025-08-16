@@ -1,7 +1,8 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from .models import Trail,Participant
+from .models import Trail,Participant,Comment
+from .forms import CreateCommentForm
 from django.contrib.auth.models import User
 from django.views.generic import (
     ListView, 
@@ -18,17 +19,14 @@ class TrailListView(ListView):
   template_name = 'app/index.html' 
   context_object_name = 'trails' 
   # ordering = ['-date_posted'] 
-all_participants=[]
 
 
 class TrailDetailView(LoginRequiredMixin,PermissionRequiredMixin,DetailView):
    permission_required = ('trails.can_view_trail')
    login_url='bad_request'
    model =Trail
-  
 
 
-   
 
 class TrailCreateView(PermissionRequiredMixin,LoginRequiredMixin, CreateView):
     permission_required = ('trails.add_trail')
@@ -77,7 +75,17 @@ def join(request):
        if not user.id in all_participants:
          participant=Participant.objects.create(trail=trail,user=user)
          participant.save()
-         return redirect('index')
-       return redirect('index')
+       return redirect('trail-detail',id_trail)
+   return redirect('index')
     
        
+def add_comment(request):
+    if request.method=='POST':
+       comment=Comment()
+       comment.user=request.user
+       trail_id=int(request.POST['add_comment_trail-id'])
+       comment.trail_id=trail_id
+       comment.comment=request.POST['add_comment_trail-text']
+       comment.save()
+    return redirect('trail-detail',trail_id)
+   
