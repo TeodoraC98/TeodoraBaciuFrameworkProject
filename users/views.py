@@ -38,20 +38,20 @@ def profile(request):
    context=Trail.objects.filter(coordinator_id=request.user.id).values()
    return render(request, 'users/profile.html',{'trails':context})
 
-# @login_required 
-# def update_profile(request):
-#    if request.method == 'POST':
-#       user_form = UserUpdateForm(request.POST, instance=request.user)
-#       profile_form = UserProfileForm(request.POST, 
-#                 request.FILES, 
-#                 instance=request.user.profile)
+@login_required 
+def update_profile(request):
+   if request.method == 'POST':
+      user_form = UserUpdateForm(request.POST, instance=request.user)
+      profile_form = UserProfileForm(request.POST, 
+                request.FILES, 
+                instance=request.user.profile)
       
-#       if profile_form.is_valid() and user_form.is_valid():
-#         profile_form.save()
-#         user_form.save()
-#         messages.success(request, f'ACCOUNT UPDATED!') 
-#         return redirect('profile') 
-#    else:
-#     user_form=UserUpdateForm(instance=request.user)
-#     profile_form = UserProfileForm(instance=request.user.profile)
-#    return render(request, 'users/update_profile.html', {'user_profile_form':profile_form,'user_form':user_form})
+      if profile_form.is_valid() and user_form.is_valid():
+        profile_form.save()
+        user_form.save()
+        messages.success(request, f'ACCOUNT UPDATED!') 
+        return redirect('profile') 
+   else:
+    user_form=UserUpdateForm(instance=request.user)
+    profile_form = UserProfileForm(instance=request.user.profile)
+   return render(request, 'users/update_profile.html', {'user_profile_form':profile_form,'user_form':user_form})
