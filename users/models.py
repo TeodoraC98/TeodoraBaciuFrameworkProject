@@ -9,7 +9,7 @@ from django.utils import timezone
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     address=models.CharField(max_length=200)
-    birth_date = models.DateTimeField()
+    birth_date = models.DateTimeField(default=timezone.now)
     experience=models.CharField(max_length=20)
     contact_number = models.CharField( max_length=25, 
         validators=[
