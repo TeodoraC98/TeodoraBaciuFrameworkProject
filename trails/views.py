@@ -21,7 +21,7 @@ class TrailListView(ListView):
 
 
 class TrailDetailView(LoginRequiredMixin,PermissionRequiredMixin,DetailView):
-   permission_required = ('trails.can_view_trail')
+   permission_required = ('trails.view_trail')
    login_url='bad_request'
    model =Trail
 
