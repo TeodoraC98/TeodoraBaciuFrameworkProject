@@ -14,7 +14,9 @@ body.thumb {
     min-width: 50vw;
 }
 
-
+.container{
+  min-height: 90vh;
+}
 .nav-item {
     background-color: #eeeeff;
     background-clip: content-box;
@@ -93,4 +95,25 @@ footer a{
     .main_det-tr{
    flex-wrap: nowrap;
 }
+}
+
+h3, .subtitle{
+
+    text-align: center;
+}
+.content{
+    width: 100%;
+    height: 100vh;
+    padding-top: 15%;
+    display:flex ;
+    justify-content: center;
+}
+.link{
+    color: rgb(163, 159, 159);
+    text-decoration: none;
+}
+.btn-logout{
+    border: none;
+    background-color:#f8f9fa;
+
 }

@@ -1,6 +1,7 @@
 {% extends "app/base.html" %}
 {% block content %}
-   <div class="content-section">
+<div class="content-section">
+   <div>
     {% if next %}
     {% if user.is_authenticated %}
       <p>This page is restricted. Please login with an account that has access.</p>
@@ -30,14 +31,15 @@
     </form>
     <div class="border-top pt-3">
         <small class="text-muted">
-           Forgot password? <a class="ml-2" href="{% url 'password_reset' %}">Get password</a>
+           Forgot password? <a class="ml-2 link " href="{% url 'password_reset' %}">Get password</a>
         </small>
     </div>
     <div class="border-top pt-3">
         <small class="text-muted">
-           Do you have an account? <a class="ml-2" href="{% url 'register' %}">Sign Up</a>
+           Do you have an account? <a class="ml-2 link" href="{% url 'register' %}">Sign Up</a>
         </small>
     </div>
+   </div>
    </div>
 {% endblock content %}
     

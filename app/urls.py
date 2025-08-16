@@ -24,7 +24,6 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("",TrailListView.as_view(), name='index'),
-    path('about/', views.about, name='about'),
     path('trails/', include('trails.urls')),
     path('users/', include('users.urls')),
     

@@ -57,6 +57,11 @@
              <div>
                <a class="btn btn-sm btn-outline-secondary" href="{% url 'trail-delete' object.id %}">Delete</a> 
              </div>
+            {%endif%}
+        {%endif%}
+      </div>
+       <div class="btn-group mb-2">
+  
              <div>
                  <form id="frm_join" action="{% url 'join' %}" method="post">
                   {% csrf_token %}
@@ -64,8 +69,7 @@
                    <input  type="submit" value="Join in" id="ip_join" class="btn btn-sm btn-outline-secondary"/>
                   </form>
              </div>
-            {%endif%}
-        {%endif%}
+           
       </div>
     </article>
    </div>

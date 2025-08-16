@@ -13,8 +13,8 @@
     </div>
     
     <form method="POST">
-       <div>
-      <a href="{% url 'update_profile'%}">Update profile</a>
+       <div class="mb-5">
+      <a  class="link " href="{% url 'update_profile'%}">Update profile</a>
      </div>
     </form>
     <div>
@@ -39,9 +39,7 @@
                     <div class="btn-group">
                       <a href="{% url 'trail-detail' trail.id %}"
                         type="button"
-                        class="btn btn-sm btn-outline-secondary">
-                        View
-                      </a>
+                        class="btn btn-sm btn-outline-secondary"> View</a>
 
                     </div>
                     <small class="text-muted">{{trail.date}}</small>

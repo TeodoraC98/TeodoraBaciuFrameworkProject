@@ -23,9 +23,6 @@
         <li >
           <a class="nav-link" href="{% url 'index' %}">Home</a>
         </li>
-        <li >
-            <a class="nav-link" href="{% url 'about' %}">About</a>
-        </li>
          {% if user.is_authenticated %}
               {% if perms.trails.add_trail %}
                <li><a class="nav-link" href="{% url 'trail-create' %}">Add Trail</a></li> 
@@ -33,10 +30,10 @@
                 <a class=" nav-link" href="{% url 'profile' %}">Profile</a>
                 <form action="{% url 'logout' %}" method="post">
                   {% csrf_token %}
-                  <button type="submit">Log Out</button>
+                  <button class="btn-logout nav-link" type="submit">Log Out</button>
                 </form>
               {% else %}
-                <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                <a class="nav-link " href="{% url 'login' %}">Log In</a>
                 <a class="nav-link" href="{% url 'register' %}">Register</a>
            {% endif %}
       </ul>
@@ -55,7 +52,7 @@
 
   <footer>
         
-    <div class="container p-4 pb-0">
+    <div class="container-footer p-4 pb-0">
       <section >
       
         <div class="row">
