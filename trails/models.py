@@ -32,6 +32,10 @@ class Trail(models.Model):
     def get_absolute_url(self):
         return reverse('trail-detail', kwargs={'pk': self.pk})
     
+
+
+    # because I use the view class to create instances of a Trail model, I use @property to access the data in the template
+    # for each route I access the list of participants
     @property
     def get_participants(self):
         participants_id=[]
@@ -41,18 +45,19 @@ class Trail(models.Model):
              participants.append(Participant.objects.get(user_id=id,trail_id=self.id))
              print(id)
         return participants
-    
+    # for each route I access the list of comments
     @property
     def get_comments(self):
         comments=[]
         comments = Comment.objects.filter(trail_id=self.id)
         return comments
              
-
+     # for each route I access the coordinator info
     @property
     def get_coordinator(self):
         coordinator=Trail.objects.get(user_id=self.coordinator_id,trail_id=self.id)
         return coordinator
+    # for each route I access the list of trails
     @property
     def get_trails(self):
         trails=Trail.objects.all()
@@ -63,7 +68,7 @@ class Participant(models.Model):
     trail = models.ForeignKey(Trail,on_delete=models.CASCADE)
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     joining_date=models.DateTimeField(default=timezone.now)
-
+    # retrieve participant data from the database
     def get_participant_details(self,id_user):
         participant=Participant.objects.get(user_id=id_user)
         return participant
@@ -76,6 +81,8 @@ class Comment(models.Model):
    
     def __str__(self):
         return f'{self.comment} '
+    # retrieve participant data from the database
+    # for each comment instance, I retrieve user data from the database to be displayed them in the template
     @property
     def get_user(self):
         user=Comment.objects.get(user_id=self.user)

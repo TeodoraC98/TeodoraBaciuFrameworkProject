@@ -26,7 +26,7 @@ def register(request):
        profile_form = UserProfileForm()
     return render(request, 'users/register.html', {'user_form': user_form, 'user_profile_form':profile_form})
 
-
+# users can access the coordinators' profile
 @login_required
 def profile_user(request,username):
    user=User.objects.get(username=username)

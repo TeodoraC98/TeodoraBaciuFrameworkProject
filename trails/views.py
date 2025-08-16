@@ -37,6 +37,7 @@ class TrailCreateView(PermissionRequiredMixin,LoginRequiredMixin, CreateView):
        form.instance.coordinator = self.request.user
        return super().form_valid(form)
   
+  
 class TrailUpdateView(LoginRequiredMixin, UpdateView,UserPassesTestMixin): 
     permission_required ='trails.change_trail'
     model = Trail
@@ -62,22 +63,25 @@ class TrailDeleteView(LoginRequiredMixin, DeleteView,UserPassesTestMixin):
             return True
         return False
     
-
+# a user can become a participant to see more details about the route:
+#  such as other participants and their comments
 def join(request):
    if request.method == 'POST':
        user=request.user
        id_trail=int(request.POST['join_trail'])
        trail=Trail.objects.get(id=id_trail)
+
        all_participants=[]
        all_participants = Participant.objects.all().filter(
           trail_id=id_trail).values_list('user_id',flat=True)
+    #    check if the user is already a participant
        if not user.id in all_participants:
          participant=Participant.objects.create(trail=trail,user=user)
          participant.save()
        return redirect('trail-detail',id_trail)
    return redirect('index')
     
-       
+    #    the possibility for participants to add a comment for each individual route
 def add_comment(request):
     if request.method=='POST':
        comment=Comment()
