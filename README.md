@@ -1,5 +1,7 @@
-Adim username: teodoraB98
+Admin username: teodoraB98
 password:password
+Coordinator:coordinator
+Password coordinator: Password98
 Database name: teodora-baciu-framework-project-database
 Hostname:dpg-d2dq2u8dl3ps73b5b6hg-a
 password:fKp33eHJUK31NJCzonuyGdxcAcIMnF9v
@@ -31,3 +33,40 @@ A coordinator can update all posted routes, even if they are posted by him or an
 
 -All users have the opportunity to update their profile data
 -in case a user has forgotten their password, we have implemented the possibility of password recovery
+
+GROUP Coordinator permission:
+
+   Content Types | content type | Can add content type 
+   Content Types | content type | Can change content type 
+   Content Types | content type | Can delete content type 
+   Content Types | content type | Can view content type 
+   Sessions | session | Can add session 
+   Sessions | session | Can change session 
+   Sessions | session | Can delete session 
+   Sessions | session | Can view session 
+   Trails | comment | Can add comment 
+   Trails | comment | Can change comment 
+   Trails | comment | Can delete comment 
+   Trails | comment | Can view comment 
+   Trails | participant | Can add participant 
+   Trails | participant | Can change participant 
+   Trails | participant | Can delete participant 
+   Trails | participant | Can view participant 
+   Trails | trail | Can add trail 
+   Trails | trail | Can change trail 
+   Trails | trail | Can delete trail 
+   Trails | trail | Can view trail 
+   Users | profile | Can add profile 
+   Users | profile | Can change profile 
+   Users | profile | Can delete profile 
+   Users | profile | Can view profile 
+
+
+---------- group Member :
+   Users | profile | Can view profile 
+   Trails | trail | Can view trail 
+   Trails | comment | Can add comment 
+   Trails | comment | Can view comment 
+   Trails | comment | Can delete comment 
+   Users | profile | Can add profile 
+   Users | profile | Can change profile 
