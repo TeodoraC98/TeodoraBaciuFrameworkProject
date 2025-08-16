@@ -1,5 +1,7 @@
-Adim username: teodoraB98
+Admin username: teodoraB98
 password:password
+Coordinator:coordinator
+Password coordinator: Password98
 Database name: teodora-baciu-framework-project-database
 Hostname:dpg-d2dq2u8dl3ps73b5b6hg-a
 password:fKp33eHJUK31NJCzonuyGdxcAcIMnF9v
